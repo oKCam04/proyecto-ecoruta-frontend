@@ -1,95 +1,133 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+// Configurar axios para enviar cookies automáticamente
+axios.defaults.withCredentials = true;
+
 function Registrarse(){
-    // Estados locales para capturar lo que escribe el usuario
+    const navigate = useNavigate();
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     
-    // Función que se ejecuta cuando el formulario hace submit
-    const handleSubmit= async()=>{
-        try{
-            // Llamada POST al backend con Axios enviando los tres campos
-            const respuesta= await axios.post('http://localhost:3000/users',{
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        setLoading(true);
+        setError('');
+        setSuccess('');
+
+        try {
+            // URL para usar el endpoint de registro de auth
+            const respuesta = await axios.post('http://localhost:3333/auth/register', {
                 nombre, 
                 email, 
                 password
             });
 
-            // Muestra en consola la respuesta del servidor
-            console.log(respuesta.data);
-
-            // Limpia los estados (resetea los inputs)
+            console.log('Registro exitoso:', respuesta.data);
+            setSuccess('¡Usuario registrado exitosamente! Redirigiendo...');
+            
+            // Limpiar formulario
             setEmail('');
             setPassword('');
             setNombre('');
-        }
-        catch(error){
-            // Si algo falla, muestra el error en consola
+
+            // Navegar automáticamente al home después de 2 segundos
+            setTimeout(() => {
+                navigate('/home');
+            }, 2000);
+
+        } catch (error: any) {
             console.error('Error al registrar el usuario:', error);
+            if (error.response?.data?.message) {
+                setError(error.response.data.message);
+            } else if (error.response?.data?.error) {
+                setError(error.response.data.error);
+            } else {
+                setError('Error al registrar. Intenta de nuevo.');
+            }
+        } finally {
+            setLoading(false);
         }
     }
 
     return(
-        // Contenedor centrado con Tailwind
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
-          {/* Tarjeta/box del formulario */}
           <div id="container" className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
-            {/* Encabezado */}
             <h1 className="text-2xl font-bold text-center mb-2 text-gray-800">Registrarse</h1>
             <p className="text-center text-gray-600 mb-6">
               Por favor llena los campos para un registro exitoso
             </p>
 
-            {/* Formulario: dispara handleSubmit al hacer submit */}
+            {/* Mostrar mensajes de error o éxito */}
+            {error && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                    {error}
+                </div>
+            )}
+            
+            {success && (
+                <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                    {success}
+                </div>
+            )}
+
             <form className="space-y-5" onSubmit={handleSubmit}>
-              {/* Campo: Nombre */}
               <div className="flex flex-col">
                 <label className="text-gray-700 font-medium mb-1">Nombre</label>
                 <input 
                   type="text" 
                   placeholder="Introduzca su nombre completo" 
-                  onChange={(event)=> setNombre(event.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  value={nombre}
+                  onChange={(event) => setNombre(event.target.value)}
+                  required
+                  disabled={loading}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 disabled:bg-gray-100"
                 />
               </div>
               
-              {/* Campo: Email */}
               <div className="flex flex-col">
                 <label htmlFor="email" className="text-gray-700 font-medium mb-1">Email</label>
                 <input 
                   type="email" 
-                  placeholder="Ingresa el email"  
-                  onChange={(event)=> setEmail(event.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  placeholder="Ingresa el email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                  disabled={loading}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 disabled:bg-gray-100"
                 />
               </div>
 
-              {/* Campo: Contraseña */}
               <div className="flex flex-col">
                 <label htmlFor="password" className="text-gray-700 font-medium mb-1">
                   Contraseña
                 </label>
                 <input 
                   type="password" 
-                  placeholder="Introduzca su contraseña"  
-                  onChange={(event)=> setPassword(event.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                  placeholder="Introduzca su contraseña"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                  disabled={loading}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 disabled:bg-gray-100"
                 />
               </div>
 
-              {/* Botón submit */}
               <button 
                 type='submit' 
-                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 cursor-pointer">
-                Registrar
+                disabled={loading}
+                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed">
+                {loading ? 'Registrando...' : 'Registrar'}
               </button>
             </form>
 
-            {/* Enlace para ir a inicio de sesión */}
-            <p className="text-center">
-              Ya te registraste? {' '} 
+            <p className="text-center mt-4">
+              ¿Ya te registraste? {' '} 
               <a href="/" className="text-blue-600 hover:underline">Inicia Sesión</a>
             </p>
           </div>
