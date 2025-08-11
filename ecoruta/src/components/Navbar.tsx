@@ -9,9 +9,10 @@ function Navbar(){
             <span className="font-semibold">EcoRutas</span>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm">
+            <a href="/home">Home</a>
             <a href="#features" className="hover:text-emerald-700">Características</a>
             <a href="#como-funciona" className="hover:text-emerald-700">Cómo funciona</a>
-            <a href="#impacto" className="hover:text-emerald-700">Impacto</a>
+            <a href="/mapa" className="hover:text-emerald-700">Ruta</a>
           </nav>
           <div className="flex items-center gap-2">
             <button className="px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-emerald-50">Ingresar</button>
