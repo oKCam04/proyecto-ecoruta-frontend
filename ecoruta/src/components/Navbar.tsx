@@ -1,6 +1,8 @@
 import { Leaf } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar(){
+  const navigate = useNavigate()
     return(
          <header className="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/70 border-b border-emerald-100">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
@@ -15,7 +17,7 @@ function Navbar(){
             <a href="/mapa" className="hover:text-emerald-700">Ruta</a>
           </nav>
           <div className="flex items-center gap-2">
-            <button className="px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-emerald-50">Ingresar</button>
+            <button className="px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-emerald-50" onClick={() => navigate('/')}>Ingresar</button>
             <button className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 shadow">Crear cuenta</button>
           </div>
         </div>
