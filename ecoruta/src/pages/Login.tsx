@@ -48,7 +48,7 @@ function Login() {
         backgroundImage: `url(${forest})`,
       }}
     >
-      <div className="w-full max-w-sm bg-white bg-opacity-90 rounded-lg shadow-lg p-6">
+      <div className="w-full max-w-sm bg-gray-50/40 bg-opacity-90 rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Inicio de sesión
         </h1>

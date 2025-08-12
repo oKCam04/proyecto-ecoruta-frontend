@@ -58,7 +58,7 @@ function Registrarse() {
       }}
     >
       {/* Capa semitransparente para que se lea mejor el texto */}
-      <div className="bg-white bg-opacity-90 rounded-lg shadow-lg p-6 w-full max-w-md">
+      <div className="bg-gray-50/40 bg-opacity-90 rounded-lg shadow-lg p-6 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-2 text-gray-800">
           Registrarse
         </h1>
