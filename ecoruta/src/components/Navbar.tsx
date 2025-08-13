@@ -15,8 +15,8 @@ function Navbar(){
             <a href="/mapa" className="hover:text-emerald-700">Ruta</a>
           </nav>
           <div className="flex items-center gap-2">
-            <button className="px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-emerald-50">Ingresar</button>
-            <button className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 shadow">Crear cuenta</button>
+            {/* <button className="px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-emerald-50">Ingresar</button>
+            <button className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 shadow">Crear cuenta</button> */}
           </div>
         </div>
       </header>
