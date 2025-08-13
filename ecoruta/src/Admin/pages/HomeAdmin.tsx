@@ -1,4 +1,4 @@
-import Navbar from "../User/components/Navbar";
+import Navbar from "../components/NavbarAdmin";
 import { Leaf, Bike, Footprints, Bus, Map, Compass, ShieldCheck, Star, ArrowRight } from "lucide-react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 

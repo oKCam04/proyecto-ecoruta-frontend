@@ -23,9 +23,15 @@ function Login() {
 
       if (data?.token) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data));
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
         console.log("Login exitoso:", data);
-        navigate("/home");
+        if(data.user.es_admin==true){
+          navigate("/homeAdmin");
+        }else{
+          navigate("/homeUser");
+        }
+        
       } else {
         setError("No se recibió un token del servidor.");
       }

@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 function Navbar(){
   const navigate = useNavigate()
+  const cerrarSesion = () => {
+    //hola
+    navigate("/");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
     return(
          <header className="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/70 border-b border-emerald-100">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
@@ -11,7 +17,7 @@ function Navbar(){
             <span className="font-semibold">EcoRutas</span>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="/home">Home</a>
+            <a href="/homeAdmin">Home</a>
             <a href="#features" className="hover:text-emerald-700">Características</a>
             <a href="#como-funciona" className="hover:text-emerald-700">Cómo funciona</a>
             <a href="/mapa" className="hover:text-emerald-700">Ruta</a>
@@ -19,9 +25,12 @@ function Navbar(){
           <div className="flex items-center gap-2">
             {/* <button className="px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-emerald-50">Ingresar</button>
             <button className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 shadow">Crear cuenta</button> */}
+            <button onClick={cerrarSesion}
+            className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 shadow">
+              Cerrar Sesión</button> 
           </div>
-        </div>
-      </header>
+         </div>
+       </header>
     )
 }
 
