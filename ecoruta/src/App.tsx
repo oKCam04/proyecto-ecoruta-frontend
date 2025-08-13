@@ -4,7 +4,7 @@ import Home from "./pages/Home"
 import Registrarse from "./pages/Registrarse"
 import Login from './pages/Login'
 import Rutas from './pages/formularioRuta'
-import MapaSimple from './pages/ruta'
+import MapaSimple from './pages/Ruta'
 function App() {
   
   return (
